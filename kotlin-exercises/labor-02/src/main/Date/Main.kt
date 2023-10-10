@@ -7,6 +7,7 @@ import kotlin.random.Random
 
 fun main(){
     val date = Date()
+    println(date)
     println(date.isleapYear())
     println(date.isValidDate())
 
