@@ -1,11 +1,11 @@
-package main
+package main.Dictionary
 
 import main.Dictionary.Interfaces.IDictionary
 import main.Dictionary.Models.DictionaryType
 import main.Dictionary.Providers.DictionaryProvider
 
 fun main(){
-    val dict: IDictionary = DictionaryProvider.createDictionary(DictionaryType.ARRAY_LIST)
+    val dict: IDictionary = DictionaryProvider.createDictionary(DictionaryType.TREE_SET)
     println("Number of words: ${dict.size()}")
     var word: String?
     while(true){
