@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.RecipesApp" parent="Base.Theme.RecipesApp"/>
+<!--    <style name="android:statusBarColor" tools:targetApi="l">@color/bottom_nav_selected_item</style>-->
 </resources>

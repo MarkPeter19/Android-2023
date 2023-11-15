@@ -5,53 +5,22 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SplashActivity">
-
-<!--    <TextView-->
-<!--            android:id="@+id/nameInputText"-->
-<!--            android:text="@string/nameplaceholder"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:layout_marginTop="40dp"/>-->
-<!--    <Button-->
-<!--            android:text="@string/startButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/startButton"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:layout_marginTop="152dp"-->
-<!--    />-->
-<!--    <EditText-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:inputType="text"-->
-<!--            android:text="@string/nameInput"-->
-<!--            android:ems="10"-->
-<!--            android:id="@+id/nameInput"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:layout_marginTop="76dp"/>-->
+        tools:context=".activities.SplashActivity">
     
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/splash_background">
         <ImageView
-                android:layout_width="211dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/app_logo"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="111dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="89dp"
-                android:layout_marginTop="243dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="288dp"/>
+            android:layout_width="211dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="264dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="267dp"
+            android:src="@drawable/app_logo"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
