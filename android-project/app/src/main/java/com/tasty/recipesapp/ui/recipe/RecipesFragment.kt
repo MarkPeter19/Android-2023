@@ -30,6 +30,8 @@ class RecipesFragment : Fragment() {
 
         val viewModel = ViewModelProvider(this)[RecipeViewModel::class.java]
         val recipes = viewModel.loadRecipesFromAssets(requireContext())
+
+
 //        Using the data write out the name and id of each recipe
         recipes?.forEach {
             Log.d("Recipe", "${it.id} ${it.name}")
@@ -38,14 +40,16 @@ class RecipesFragment : Fragment() {
             it.instructions.forEach {
                 Log.d("Recipe", "\t${it.display_text}")
             }
-
-//            Log the sections
+            //Sections
             Log.d("Recipe", "Sections:")
             it.sections.forEach {
                 Log.d("Recipe", "\t${it.name}")
                 it.components.forEach {
                     Log.d("Recipe", "\t\t${it.raw_text}")
                 }
+            }
+            it.description.forEach {
+                Log.d("Recipe", "\t${it}")
             }
         }
     }

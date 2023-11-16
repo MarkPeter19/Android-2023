@@ -85,7 +85,7 @@ object Mapping {
         )
     }
 
-    @JvmName("MesurementModel")
+    @JvmName("MeasurementModel")
     fun com.tasty.recipesapp.data.dto.MeasurementDTO.toModel(): com.tasty.recipesapp.data.models.MeasurementModel {
         return com.tasty.recipesapp.data.models.MeasurementModel(
             unit = this.unit.toModel(),
