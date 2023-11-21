@@ -6,8 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.tasty.recipesapp.R
+import com.tasty.recipesapp.data.models.RecipeModel
 
 class RecipesFragment : Fragment() {
 
@@ -25,11 +30,30 @@ class RecipesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_recipes, container, false)
     }
 
+    private fun navigateToRecipeDetail(recipe: RecipeModel) {
+        findNavController()
+            .navigate(R.id.action_recipesFragment_to_recipeDetailFragment,
+                bundleOf("recipeId" to recipe.id))
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val viewModel = ViewModelProvider(this)[RecipeViewModel::class.java]
         val recipes = viewModel.loadRecipesFromAssets(requireContext())
+
+
+        // Create RecyclerView and set up the adapter
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val recipeAdapter = RecipeAdapter(
+            recipes.orEmpty(),
+            onItemClick = { recipe -> navigateToRecipeDetail(recipe) },
+            onDetailsClick = { recipe -> navigateToRecipeDetail(recipe) }
+        )
+        recyclerView.adapter = recipeAdapter
+
+
 
 
 //        Using the data write out the name and id of each recipe

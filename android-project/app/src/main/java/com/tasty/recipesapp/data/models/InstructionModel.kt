@@ -12,15 +12,3 @@ data class InstructionTime(
     val start_time: Int,
     val end_time: Int,
 )
-
-
-//fun InstructionDTO.toModel(): InstructionModel {
-//    return InstructionModel(
-//        id = this.id,
-//        display_text = this.display_text,
-//        time = InstructionTime(this.start_time,this.end_time),
-//    )
-//}
-//fun List<InstructionDTO>.toModelList(): List<InstructionModel> {
-//    return this.map { it.toModel() }
-//}
