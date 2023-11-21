@@ -6,6 +6,8 @@ data class RecipeModel(
     val description: String,
     val instructions: List<InstructionModel>,
     val sections: List<SectionModel>,
+    val user_ratings: UserRatingModel,
+    val tags: List<TagModel>,
 )
 
 data class PriceModel(

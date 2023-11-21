@@ -35,6 +35,8 @@ class RecipesFragment : Fragment() {
 //        Using the data write out the name and id of each recipe
         recipes?.forEach {
             Log.d("Recipe", "${it.id} ${it.name}")
+            Log.d("Recipe","\t${it.description}")
+
             Log.d("Recipe", "Instructions:")
 //            Log the instructions
             it.instructions.forEach {
@@ -48,10 +50,17 @@ class RecipesFragment : Fragment() {
                     Log.d("Recipe", "\t\t${it.raw_text}")
                 }
             }
-            it.description.forEach {
-                Log.d("Recipe", "\t${it}")
+            //userRatings
+            Log.d("Recipe", "User Ratings:")
+            Log.d("Recipe", "\tScore: ${it.user_ratings.score}")
+            Log.d("Recipe", "\tPositive: ${it.user_ratings.count_positive}")
+            Log.d("Recipe", "\tNegative: ${it.user_ratings.count_negative}")
+            //tags
+            Log.d("Recipe", "Tags:")
+            it.tags.forEach {
+                Log.d("Recipe", "\t\t${it.display_name}")
             }
+
         }
     }
 }
-

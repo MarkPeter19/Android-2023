@@ -54,7 +54,7 @@ data class RecipeDTO(
     val facebook_posts: List<String>,
     val show_id: Int,
     val is_shoppable: Boolean,
-    val keywords: String
+    val keywords: String,
 )
 
 data class PriceDTO(

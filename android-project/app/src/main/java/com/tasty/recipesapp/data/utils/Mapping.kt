@@ -5,11 +5,15 @@ import com.tasty.recipesapp.data.dto.IngredientDTO
 import com.tasty.recipesapp.data.dto.InstructionDTO
 import com.tasty.recipesapp.data.dto.RecipeDTO
 import com.tasty.recipesapp.data.dto.SectionDTO
+import com.tasty.recipesapp.data.dto.TagDTO
+import com.tasty.recipesapp.data.dto.UserRatingDTO
 import com.tasty.recipesapp.data.models.ComponentModel
 import com.tasty.recipesapp.data.models.InstructionModel
 import com.tasty.recipesapp.data.models.InstructionTime
 import com.tasty.recipesapp.data.models.RecipeModel
 import com.tasty.recipesapp.data.models.SectionModel
+import com.tasty.recipesapp.data.models.TagModel
+import com.tasty.recipesapp.data.models.UserRatingModel
 
 object Mapping {
     @JvmName("toRecipeModel")
@@ -20,6 +24,8 @@ object Mapping {
             description = this.description,
             instructions = instructions.toModelList(),
             sections = sections.toModelList(),
+            user_ratings = user_ratings.toModel(),
+            tags = tags.toModelList(),
         )
     }
 
@@ -53,6 +59,36 @@ object Mapping {
 
     @JvmName("toSectionModelList")
     fun List<SectionDTO>.toModelList(): List<SectionModel> {
+        return this.map { it.toModel() }
+    }
+
+    @JvmName("toTagModel")
+    fun TagDTO.toModel(): TagModel {
+        return TagModel(
+            display_name = this.display_name,
+            type = this.type,
+            id = this.id,
+            name = this.name,
+            root_tag_type = this.root_tag_type,
+        )
+    }
+
+    @JvmName("toTagModelList")
+    fun List<TagDTO>.toModelList(): List<TagModel> {
+        return this.map { it.toModel() }
+    }
+
+    @JvmName("toUserRatingModel")
+    fun UserRatingDTO.toModel(): UserRatingModel {
+        return UserRatingModel(
+            count_positive = this.count_positive,
+            count_negative = this.count_negative,
+            score = this.score
+        )
+    }
+
+    @JvmName("toUserRatingModelList")
+    fun List<UserRatingDTO>.toModelList(): List<UserRatingModel> {
         return this.map { it.toModel() }
     }
 
