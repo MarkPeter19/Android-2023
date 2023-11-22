@@ -1,5 +1,5 @@
 package com.tasty.recipesapp.data.models
 
-data class TopicModel(
+data class IngredientModel(
     val name: String
 )

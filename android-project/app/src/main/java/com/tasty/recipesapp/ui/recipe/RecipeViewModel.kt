@@ -1,24 +1,21 @@
 package com.tasty.recipesapp.ui.recipe
 
 import android.content.Context
-import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
 import com.tasty.recipesapp.data.models.RecipeModel
-import com.tasty.recipesapp.data.repositories.RecipeRepository
-import com.tasty.recipesapp.data.repositories.RecipeResponseDTO
+import com.tasty.recipesapp.providers.RepositoryProvider
 
-class RecipeViewModel() : ViewModel() {
+class RecipeViewModel : ViewModel() {
 
-    private val recipeRepository = RecipeRepository()
+    private val _recipeModels = MutableLiveData<List<RecipeModel>>()
+    val recipeModels: LiveData<List<RecipeModel>> = _recipeModels
 
-
-    fun loadRecipesFromAssets(context: Context): List<RecipeModel>? {
-        return recipeRepository.loadRecipesFromAssets(context)
+    //Function to load data from the repository
+    fun loadRecipeData(context: Context) {
+        val data = RepositoryProvider.recipesRepository.getAll(context)
+        _recipeModels.value = data
     }
-
-
 
 }

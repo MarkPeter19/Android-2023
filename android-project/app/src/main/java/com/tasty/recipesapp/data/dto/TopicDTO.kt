@@ -1,6 +1,10 @@
 package com.tasty.recipesapp.data.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class TopicDTO(
+    @SerializedName("name")
     val name: String,
-    val slug: String,
+    @SerializedName("id")
+    val slug: String
 )

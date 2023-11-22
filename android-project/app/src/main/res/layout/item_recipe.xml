@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="15dp"
+    app:cardElevation="4dp">
 
-    <ImageView
-        android:id="@+id/RecipeImageView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textRecipeName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recipe Name"/>
+        <TextView
+            android:text="TextView"
+            android:textSize="20sp"
+            android:layout_width="148dp"
+            android:layout_height="85dp"
+            android:id="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.857"/>
+        <ImageView
+            android:layout_width="173dp"
+            android:layout_height="143dp"
+            app:srcCompat="@drawable/recipe_icon"
+            android:id="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintEnd_toStartOf="@+id/textView"/>
 
-    <TextView
-        android:id="@+id/textRecipeDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recipe Description"/>
 
-    <!-- Add other UI elements for recipe details (description, etc.) -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
-
-
+</androidx.cardview.widget.CardView>

@@ -1,9 +1,16 @@
 package com.tasty.recipesapp.data.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class TagDTO(
-    val display_name: String,
-    val type: String,
-    val id: Int,
+    @SerializedName("root_tag_type")
+    val rootTagType: String,
+    @SerializedName("name")
     val name: String,
-    val root_tag_type: String,
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("display_name")
+    val displayName: String,
+    @SerializedName("type")
+    val type: String
 )

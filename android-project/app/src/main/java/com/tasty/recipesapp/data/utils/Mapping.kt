@@ -1,153 +1,156 @@
 package com.tasty.recipesapp.data.utils
 
-import com.tasty.recipesapp.data.dto.ComponentDTO
-import com.tasty.recipesapp.data.dto.IngredientDTO
-import com.tasty.recipesapp.data.dto.InstructionDTO
-import com.tasty.recipesapp.data.dto.RecipeDTO
-import com.tasty.recipesapp.data.dto.SectionDTO
-import com.tasty.recipesapp.data.dto.TagDTO
-import com.tasty.recipesapp.data.dto.UserRatingDTO
-import com.tasty.recipesapp.data.models.ComponentModel
-import com.tasty.recipesapp.data.models.InstructionModel
-import com.tasty.recipesapp.data.models.InstructionTime
-import com.tasty.recipesapp.data.models.RecipeModel
-import com.tasty.recipesapp.data.models.SectionModel
-import com.tasty.recipesapp.data.models.TagModel
-import com.tasty.recipesapp.data.models.UserRatingModel
+import com.tasty.recipesapp.data.dto.*
+import com.tasty.recipesapp.data.models.*
+
+
 
 object Mapping {
-    @JvmName("toRecipeModel")
-    fun RecipeDTO.toModel(): RecipeModel {
-        return RecipeModel(
-            id = this.id,
-            name = this.name,
-            description = this.description,
-            instructions = instructions.toModelList(),
-            sections = sections.toModelList(),
-            user_ratings = user_ratings.toModel(),
-            tags = tags.toModelList(),
-        )
-    }
-
-    @JvmName("toRecipeModelList")
-    fun List<RecipeDTO>.toModelList(): List<RecipeModel> {
-        return this.map { it.toModel() }
-    }
-
-    @JvmName("toInstructionModel")
     fun InstructionDTO.toModel(): InstructionModel {
         return InstructionModel(
             id = this.id,
-            display_text = this.display_text,
-            time = InstructionTime(this.start_time,this.end_time),
+            displayText = this.displayText,
+            time = InstructionTime(this.startTime, this.endTime)
         )
     }
 
-    @JvmName("toInstructionModelList")
-    fun List<InstructionDTO>.toModelList(): List<InstructionModel> {
+    fun List<InstructionDTO>.toInstructionModelList(): List<InstructionModel> {
         return this.map { it.toModel() }
     }
 
-    @JvmName("toSectionModel")
-    fun SectionDTO.toModel(): SectionModel {
-        return SectionModel(
-            components = this.components.toModelList(),
-            position = this.position ?: 0,
-            name = this.name ?: "",
-        )
-    }
-
-    @JvmName("toSectionModelList")
-    fun List<SectionDTO>.toModelList(): List<SectionModel> {
-        return this.map { it.toModel() }
-    }
-
-    @JvmName("toTagModel")
     fun TagDTO.toModel(): TagModel {
         return TagModel(
-            display_name = this.display_name,
-            type = this.type,
-            id = this.id,
+            displayName = this.displayName
+        )
+    }
+
+    fun List<TagDTO>.toTagModelList(): List<TagModel> {
+        return this.map { it.toModel() }
+    }
+
+    fun CreditDTO.toModel(): CreditModel {
+        return CreditModel(
+            name = this.name
+        )
+    }
+
+    fun List<CreditDTO>.toCreditModelList(): List<CreditModel> {
+        return this.map { it.toModel() }
+    }
+
+    fun IngredientDTO.toModel(): IngredientModel {
+        return IngredientModel(
+            name = this.name
+        )
+    }
+
+    fun List<IngredientDTO>.toIngredientModelList(): List<IngredientModel> {
+        return this.map { it.toModel() }
+    }
+
+    fun UserRatingsDTO.toModel(): UserRatingsModel {
+        return UserRatingsModel(
+            countPositive = this.countPositive,
+            countNegative = this.countNegative
+        )
+    }
+
+    fun List<UserRatingsDTO>.toUserRatingsModelList(): List<UserRatingsModel> {
+        return this.map { it.toModel() }
+    }
+
+    fun UnitDTO.toModel(): UnitModel {
+        return UnitModel(
+            displaySingular = this.displaySingular,
             name = this.name,
-            root_tag_type = this.root_tag_type,
+            displayPlural = this.displayPlural
         )
     }
 
-    @JvmName("toTagModelList")
-    fun List<TagDTO>.toModelList(): List<TagModel> {
+    fun List<UnitDTO>.toUnitModelList(): List<UnitModel> {
         return this.map { it.toModel() }
     }
 
-    @JvmName("toUserRatingModel")
-    fun UserRatingDTO.toModel(): UserRatingModel {
-        return UserRatingModel(
-            count_positive = this.count_positive,
-            count_negative = this.count_negative,
-            score = this.score
+    fun MeasurementDTO.toModel(): MeasurementModel {
+        return MeasurementModel(
+            unit = this.unit.toModel(),
+            quantity = this.quantity
         )
     }
 
-    @JvmName("toUserRatingModelList")
-    fun List<UserRatingDTO>.toModelList(): List<UserRatingModel> {
+    fun List<MeasurementDTO>.toMeasurementModelList(): List<MeasurementModel> {
         return this.map { it.toModel() }
     }
 
-    @JvmName("toComponentModel")
     fun ComponentDTO.toModel(): ComponentModel {
         return ComponentModel(
-            extra_comment = this.extra_comment,
+            measurements = this.measurements.toMeasurementModelList(),
+            rawText = this.rawText,
             ingredient = this.ingredient.toModel(),
-            id = this.id,
-            position = this.position,
-            measurements = this.measurements.toModelList(),
-            raw_text = this.raw_text,
         )
     }
 
-    @JvmName("toComponentModelList")
-    fun List<ComponentDTO>.toModelList(): List<ComponentModel> {
+    fun List<ComponentDTO>.toComponentModelList(): List<ComponentModel> {
         return this.map { it.toModel() }
     }
 
-    @JvmName("toIngredientModel")
-    fun IngredientDTO.toModel(): com.tasty.recipesapp.data.models.IngredientModel {
-        return com.tasty.recipesapp.data.models.IngredientModel(
-            created_at = this.created_at,
-            display_plural = this.display_plural,
-            id = this.id,
-            display_singular = this.display_singular,
-            updated_at = this.updated_at,
+    fun SectionDTO.toModel(): SectionModel {
+        return SectionModel(
+            components = this.components.toComponentModelList(),
+            name = this.name
+        )
+    }
+
+    fun List<SectionDTO>.toSectionModelList(): List<SectionModel> {
+        return this.map { it.toModel() }
+    }
+
+    fun TopicDTO.toModel(): TopicModel {
+        return TopicModel(
+            name = this.name
+        )
+    }
+
+    fun List<TopicDTO>.toTopicModelList(): List<TopicModel> {
+        return this.map { it.toModel() }
+    }
+
+    fun NutritionDTO.toModel(): NutritionModel {
+        return NutritionModel(
+            carbohydrates = this.carbohydrates,
+            fiber = this.fiber,
+            protein = this.protein,
+            fat = this.fat,
+            calories = this.calories,
+            sugar = this.sugar
+        )
+    }
+
+    fun List<NutritionDTO>.toNutritionModelList(): List<NutritionModel> {
+        return this.map { it.toModel() }
+    }
+
+    fun RecipeDTO.toModel(): RecipeModel {
+        return RecipeModel(
+            tags = this.tags.toTagModelList(),
+            thumbnailUrl = this.thumbnailUrl,
+            originalVideoUrl = this.originalVideoUrl,
+            userRatings = this.userRatings.toModel(),
+            sections = this.sections.toSectionModelList(),
             name = this.name,
+            videoUrl = this.videoUrl,
+            nutrition = this.nutrition.toModel(),
+            topics = this.topics.toTopicModelList(),
+            instructions = this.instructions.toInstructionModelList(),
+            credits = this.credits.toCreditModelList(),
+            description = this.description,
+            numServings = this.numServings
         )
     }
 
-    @JvmName("MeasurementModel")
-    fun com.tasty.recipesapp.data.dto.MeasurementDTO.toModel(): com.tasty.recipesapp.data.models.MeasurementModel {
-        return com.tasty.recipesapp.data.models.MeasurementModel(
-            unit = this.unit.toModel(),
-            quantity = this.quantity,
-            id = this.id,
-        )
-    }
-
-    @JvmName("toMeasurementModelList")
-    fun List<com.tasty.recipesapp.data.dto.MeasurementDTO>.toModelList(): List<com.tasty.recipesapp.data.models.MeasurementModel> {
+    fun List<RecipeDTO>.toRecipeModelList(): List<RecipeModel> {
         return this.map { it.toModel() }
     }
 
-    @JvmName("toUnitModel")
-    fun com.tasty.recipesapp.data.dto.UnitDTO.toModel(): com.tasty.recipesapp.data.models.UnitModel {
-        return com.tasty.recipesapp.data.models.UnitModel(
-            system = this.system,
-            name = this.name,
-            display_plural = this.display_plural,
-            display_singular = this.display_singular,
-            abbreviation = this.abbreviation,
-        )
-    }
 
-    @JvmName("toUnitModelList")
-    fun List<com.tasty.recipesapp.data.dto.UnitDTO>.toModelList(): List<com.tasty.recipesapp.data.models.UnitModel> {
-        return this.map { it.toModel() }
-    }
 }
