@@ -43,4 +43,8 @@ class RecipesFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_recipes, container, false)
     }
+
+
+
+
 }
