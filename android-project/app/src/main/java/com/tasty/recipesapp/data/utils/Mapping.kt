@@ -153,4 +153,23 @@ object Mapping {
     }
 
 
+    // new recipe
+
+    fun NewRecipeDTO.toModel(): NewRecipeModel {
+        return NewRecipeModel(
+            id = this.id,
+            title = this.title,
+            instructions = this.instructions,
+            description = this.description,
+            ingredients = this.ingredients,
+            pictureUrl = this.pictureUrl,
+            videoUrl = this.videoUrl,
+        )
+    }
+
+    fun List<NewRecipeDTO>.toNewRecipeModelList(): List<NewRecipeModel> {
+        return this.map { it.toModel() }
+    }
+
+
 }

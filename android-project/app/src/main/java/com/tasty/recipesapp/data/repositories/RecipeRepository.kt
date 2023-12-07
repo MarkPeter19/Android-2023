@@ -5,8 +5,11 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.tasty.recipesapp.data.dto.NewRecipeDTO
 import com.tasty.recipesapp.data.dto.RecipeDTO
+import com.tasty.recipesapp.data.models.NewRecipeModel
 import com.tasty.recipesapp.data.models.RecipeModel
+import com.tasty.recipesapp.data.utils.Mapping.toModel
 import com.tasty.recipesapp.data.utils.Mapping.toRecipeModelList
 import com.tasty.recipesapp.database.entities.RecipeEntity
 import com.tasty.recipesapp.database.daos.RecipeDao
@@ -14,7 +17,37 @@ import com.tasty.recipesapp.database.dataBases.RecipeDatabase
 import org.json.JSONObject
 import java.io.IOException
 
-class RecipesRepository : IGenericRepository<RecipeModel> {
+class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<RecipeModel> {
+
+    //insert
+    suspend fun insertRecipe(recipe: RecipeEntity) {
+        recipeDao.insertRecipe(recipe)
+    }
+
+    //delete
+    suspend fun deleteRecipe(recipe: RecipeEntity) {
+        recipeDao.deleteRecipe(recipe)
+    }
+
+    // get recipies from database
+    suspend fun getAllRecipes(): List<Unit> {
+        return recipeDao.getAllRecipes().map {
+            val jsonObject = JSONObject(it.json)
+            jsonObject.apply { put("id", it.internalId) }
+            val gson = Gson()
+            gson.fromJson(jsonObject.toString(), NewRecipeDTO::class.java).toModel()
+        }
+    }
+
+    suspend fun getRecipeById(recipeId: Long): NewRecipeModel? {
+        val recipeEntity = recipeDao.getRecipeById(recipeId)
+        return recipeEntity?.let {
+            val jsonObject = JSONObject(it.json)
+            jsonObject.put("id", it.internalId)
+            val gson = Gson()
+            gson.fromJson(jsonObject.toString(), NewRecipeDTO::class.java).toModel()
+        }
+    }
 
 
     //read data form json file
@@ -46,31 +79,4 @@ class RecipesRepository : IGenericRepository<RecipeModel> {
         }
         return recipeList
     }
-
-
-    //read data from database
-    fun readDataFromDataBase(context: Context): List<RecipeEntity> {
-        val recipeDao = RecipeDatabase.getDatabase(context).recipeDao()
-
-        suspend fun insertRecipe(recipe: RecipeEntity) {
-            recipeDao.insertRecipe(recipe)
-        }
-
-        suspend fun getAllRecipes(): List<RecipeModel> {
-
-
-            return recipeDao.getAllRecipes().map {
-                val jsonObject = JSONObject(it.json)
-                jsonObject.apply { put("id", it.internalId) }
-                gson.fromJson(jsonObject.toString(), RecipeDTO::class.java).toModel()
-            }
-
-
-        }
-
-
-
-    }
-
-
 }

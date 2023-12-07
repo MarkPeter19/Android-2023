@@ -8,16 +8,18 @@ import com.tasty.recipesapp.database.daos.RecipeDao
 import com.tasty.recipesapp.database.dataBases.RecipeDatabase
 
 
+
 object RepositoryProvider {
+
     private lateinit var recipeDao: RecipeDao
 
     fun initialize(context: Context) {
         recipeDao = RecipeDatabase.getDatabase(context).recipeDao()
     }
 
-    val recipeRepository: RecipeRepository by lazy {
+    val recipeRepository: RecipesRepository by lazy {
         checkInitialized()
-        RecipeRepository(recipeDao)
+        RecipesRepository(recipeDao)
     }
 
     private fun checkInitialized() {
@@ -27,5 +29,5 @@ object RepositoryProvider {
     }
 
     val instructionsRepository: InstructionsRepository = InstructionsRepository()
-    //val recipeRepository: RecipeRepository = RecipeRepository()
+
 }
