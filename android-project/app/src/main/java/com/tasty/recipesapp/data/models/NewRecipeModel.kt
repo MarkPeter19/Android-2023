@@ -6,6 +6,6 @@ data class NewRecipeModel(
     val description: String?,
     val ingredients: List<String>?,
     val instructions: List<String>?,
-    val pictureUrl: String?,
+    val thumbnailUrl: String?,
     val videoUrl: String?
 )

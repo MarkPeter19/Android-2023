@@ -1,4 +1,4 @@
-package com.tasty.recipesapp.data.repositories
+package com.tasty.recipesapp.repositories
 
 import android.content.Context
 

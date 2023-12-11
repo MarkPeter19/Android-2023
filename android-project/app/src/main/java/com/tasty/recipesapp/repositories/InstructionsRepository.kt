@@ -1,4 +1,4 @@
-package com.tasty.recipesapp.data.repositories
+package com.tasty.recipesapp.repositories
 
 import android.content.Context
 import android.util.Log
@@ -7,8 +7,8 @@ import com.google.gson.reflect.TypeToken
 import com.tasty.recipesapp.data.dto.InstructionDTO
 import com.tasty.recipesapp.data.models.InstructionModel
 import com.tasty.recipesapp.data.models.InstructionTime
-import com.tasty.recipesapp.data.repositories.IGenericRepository
-import com.tasty.recipesapp.data.utils.Mapping.toInstructionModelList
+import com.tasty.recipesapp.repositories.IGenericRepository
+import com.tasty.recipesapp.utils.Mapping.toInstructionModelList
 import org.json.JSONObject
 import java.io.IOException
 

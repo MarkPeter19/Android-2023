@@ -14,6 +14,19 @@ import com.tasty.recipesapp.ui.recipe.RecipeAdapter
 
 class RecipesFragment : Fragment() {
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("SCREENS", "Opened Recipe Screen!")
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_recipes, container, false)
+    }
+
     private val recipeViewModel: RecipeViewModel by viewModels()
     private lateinit var recipeAdapter: RecipeAdapter
 
@@ -37,12 +50,7 @@ class RecipesFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_recipes, container, false)
-    }
+
 
 
 

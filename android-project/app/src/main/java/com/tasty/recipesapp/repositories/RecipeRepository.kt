@@ -1,4 +1,4 @@
-package com.tasty.recipesapp.data.repositories
+package com.tasty.recipesapp.repositories
 
 
 import android.content.Context
@@ -9,8 +9,8 @@ import com.tasty.recipesapp.data.dto.NewRecipeDTO
 import com.tasty.recipesapp.data.dto.RecipeDTO
 import com.tasty.recipesapp.data.models.NewRecipeModel
 import com.tasty.recipesapp.data.models.RecipeModel
-import com.tasty.recipesapp.data.utils.Mapping.toModel
-import com.tasty.recipesapp.data.utils.Mapping.toRecipeModelList
+import com.tasty.recipesapp.utils.Mapping.toModel
+import com.tasty.recipesapp.utils.Mapping.toRecipeModelList
 import com.tasty.recipesapp.database.entities.RecipeEntity
 import com.tasty.recipesapp.database.daos.RecipeDao
 import com.tasty.recipesapp.database.dataBases.RecipeDatabase
@@ -39,6 +39,15 @@ class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<R
         }
     }
 
+//    suspend fun getAllOwnRecipes(): List<NewRecipeModel> {
+//        return recipeDao.getAllRecipes().map {
+//            val jsonObject = JSONObject(it.json)
+//            jsonObject.apply { put("id", it.internalId) }
+//            val gson = Gson()
+//            gson.fromJson(jsonObject.toString(), NewRecipeDTO::class.java).toModel()
+//        }
+//    }
+
     suspend fun getRecipeById(recipeId: Long): NewRecipeModel? {
         val recipeEntity = recipeDao.getRecipeById(recipeId)
         return recipeEntity?.let {
@@ -50,12 +59,31 @@ class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<R
     }
 
 
+
+//    override fun NewRecipeDTO.toModel(): NewRecipeModel {
+//        return NewRecipeModel(
+//            id = this.id,
+//            description = this.description,
+//            title = this.title,
+//            pictureUrl = this.pictureUrl,
+//            videoUrl = this.videoUrl,
+//            ingredients = this.ingredients,
+//            instructions = this.instructions
+//        )
+//    }
+//
+//    override fun List<NewRecipeDTO>.toModelList(): List<NewRecipeModel> {
+//        return this.map { it.toModel() }
+//    }
+
+
+
     //read data form json file
     override fun getAll(context: Context): List<RecipeModel> {
-        return readAll(context).toRecipeModelList()
+        return readFromAssets(context).toRecipeModelList()
     }
 
-    fun readAll(context: Context): List<RecipeDTO> {
+    fun readFromAssets(context: Context): List<RecipeDTO> {
         val gson = Gson()
         var recipeList = listOf<RecipeDTO>()
         val assetManager = context.assets

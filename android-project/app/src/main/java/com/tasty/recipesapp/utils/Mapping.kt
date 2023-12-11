@@ -1,4 +1,4 @@
-package com.tasty.recipesapp.data.utils
+package com.tasty.recipesapp.utils
 
 import com.tasty.recipesapp.data.dto.*
 import com.tasty.recipesapp.data.models.*
@@ -162,7 +162,7 @@ object Mapping {
             instructions = this.instructions,
             description = this.description,
             ingredients = this.ingredients,
-            pictureUrl = this.pictureUrl,
+            thumbnailUrl = this.thumbnailUrl,
             videoUrl = this.videoUrl,
         )
     }

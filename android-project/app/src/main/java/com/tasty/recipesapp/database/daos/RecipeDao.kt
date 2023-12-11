@@ -7,7 +7,6 @@ import androidx.room.Query
 import com.tasty.recipesapp.database.entities.RecipeEntity
 
 @Dao
-
 interface RecipeDao {
     @Insert
     suspend fun insertRecipe(recipe: RecipeEntity)

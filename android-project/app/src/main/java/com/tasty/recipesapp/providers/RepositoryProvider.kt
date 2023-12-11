@@ -1,12 +1,9 @@
 package com.tasty.recipesapp.providers
 
-
 import android.content.Context
-import com.tasty.recipesapp.data.repositories.InstructionsRepository
-import com.tasty.recipesapp.data.repositories.RecipesRepository
+import com.tasty.recipesapp.repositories.RecipesRepository
 import com.tasty.recipesapp.database.daos.RecipeDao
 import com.tasty.recipesapp.database.dataBases.RecipeDatabase
-
 
 
 object RepositoryProvider {
@@ -27,7 +24,5 @@ object RepositoryProvider {
             throw UninitializedPropertyAccessException("RepositoryProvider has not been initialized")
         }
     }
-
-    val instructionsRepository: InstructionsRepository = InstructionsRepository()
 
 }

@@ -14,7 +14,7 @@ class RecipeViewModel : ViewModel() {
 
     //Function to load data from the repository
     fun loadRecipeData(context: Context) {
-        val data = RepositoryProvider.recipesRepository.getAll(context)
+        val data = RepositoryProvider.recipeRepository.getAll(context)
         _recipeModels.value = data
     }
 

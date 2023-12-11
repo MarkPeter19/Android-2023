@@ -18,6 +18,11 @@ class RecipeAdapter(
     var recipes: List<RecipeModel>
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
+    class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val recipeTitle: TextView = itemView.findViewById(R.id.recipeTitle)
+        val recipeImage : ImageView = itemView.findViewById(R.id.recipeImage)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_recipe, parent, false)
@@ -26,7 +31,7 @@ class RecipeAdapter(
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = recipes[position]
-        holder.textView.text = recipe.name
+        holder.recipeTitle.text = recipe.name
 
         val executor = Executors.newSingleThreadExecutor()
         val handler = Handler(Looper.getMainLooper())
@@ -41,7 +46,7 @@ class RecipeAdapter(
                 image = BitmapFactory.decodeStream(`in`)
 
                 handler.post {
-                    holder.imageView.setImageBitmap(image)
+                    holder.recipeImage.setImageBitmap(image)
                 }
             }
 
@@ -55,10 +60,7 @@ class RecipeAdapter(
         return recipes.size
     }
 
-    class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView : TextView = itemView.findViewById(R.id.textView)
-        val imageView : ImageView = itemView.findViewById(R.id.imageView)
-    }
+
 
 }
 
