@@ -79,21 +79,20 @@
                     android:textSize="18sp"
                     android:text="Step 1\nStep 2\nStep 3"/>
 
-            <TextView
-                    android:id="@+id/textViewVideoUrlTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="16dp"
-                    android:text="Video"/>
+<!--            <TextView-->
+<!--                    android:id="@+id/textViewVideoUrlTitle"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:text="Video"/>-->
 
 <!--            <androidx.media3.ui.PlayerView-->
 <!--                    android:id="@+id/playerView"-->
 <!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="200dp"-->
 <!--                    android:layout_marginTop="8dp"/>-->
-
 
 
 <!--            <TextView-->

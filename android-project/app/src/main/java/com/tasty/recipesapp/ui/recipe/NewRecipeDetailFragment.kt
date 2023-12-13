@@ -26,8 +26,6 @@ import kotlinx.coroutines.launch
 class NewRecipeDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentNewRecipeDetailBinding
-    //private lateinit var videoViewModel: VideoViewModel
-    //private lateinit var videoView: VideoView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +34,6 @@ class NewRecipeDetailFragment : Fragment() {
         binding = FragmentNewRecipeDetailBinding.inflate(inflater, container, false)
         val view = binding.root
 
-//        videoViewModel = ViewModelProvider(this).get(VideoViewModel::class.java)
-//        videoView = binding.playerView
 
         binding.backButtonNewRecipeDetail.setOnClickListener {
             findNavController().navigateUp()
@@ -70,29 +66,11 @@ class NewRecipeDetailFragment : Fragment() {
                 textViewInstructions.text = recipe?.instructions?.joinToString(separator = "\n") { "- $it" }
 //                textViewVideoUrl.text = recipe?.videoUrl
 
-
-                // Observe changes in video readiness
-//                videoViewModel.isVideoReady.observe(viewLifecycleOwner, Observer { isReady ->
-//                    if (isReady) {
-//                        // Start playing the video
-//                        videoView.start()
-//                    } else {
-//                        // Handle the error or notify the user
-//                    }
-//                })
-//                recipe?.videoUrl?.let { videoViewModel.setVideoPath(it) }
             }
         }
 
         return view
     }
-//    override fun onDestroy() {
-//        // Release resources
-//        if (videoView.isPlaying) {
-//            videoView.stopPlayback()
-//        }
-//        super.onDestroy()
-//    }
 
 
 }

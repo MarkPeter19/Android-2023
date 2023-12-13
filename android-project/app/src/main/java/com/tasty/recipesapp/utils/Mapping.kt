@@ -134,11 +134,11 @@ object Mapping {
         return RecipeModel(
             tags = this.tags.toTagModelList(),
             thumbnailUrl = this.thumbnailUrl,
-            //originalVideoUrl = this.originalVideoUrl,
+            originalVideoUrl = this.originalVideoUrl,
             userRatings = this.userRatings.toModel(),
             sections = this.sections.toSectionModelList(),
             name = this.name,
-            //videoUrl = this.videoUrl,
+            videoUrl = this.videoUrl,
             nutrition = this.nutrition.toModel(),
             topics = this.topics.toTopicModelList(),
             instructions = this.instructions.toInstructionModelList(),
@@ -163,7 +163,7 @@ object Mapping {
             description = this.description,
             ingredients = this.ingredients,
             thumbnailUrl = this.thumbnailUrl,
-            //videoUrl = this.videoUrl,
+            videoUrl = this.videoUrl,
         )
     }
 

@@ -28,7 +28,7 @@ class NewRecipeFragment : Fragment() {
     private lateinit var editTextTitle: EditText
     private lateinit var editTextDescription: EditText
     private lateinit var editTextPictureUrl: EditText
-    //private lateinit var editTextVideoUrl: EditText
+    private lateinit var editTextVideoUrl: EditText
     private lateinit var ingredientsContainer: LinearLayout
     private lateinit var instructionsContainer: LinearLayout
 
@@ -44,7 +44,7 @@ class NewRecipeFragment : Fragment() {
         editTextTitle = view.findViewById(R.id.editTextTitle)
         editTextDescription = view.findViewById(R.id.editTextDescription)
         editTextPictureUrl = view.findViewById(R.id.editTextPictureUrl)
-        //editTextVideoUrl = view.findViewById(R.id.editTextVideoUrl)
+        editTextVideoUrl = view.findViewById(R.id.editTextVideoUrl)
         ingredientsContainer = view.findViewById(R.id.ingredientsContainer)
         instructionsContainer = view.findViewById(R.id.instructionsContainer)
 
@@ -100,7 +100,7 @@ class NewRecipeFragment : Fragment() {
         editTextTitle = view.findViewById(R.id.editTextTitle)
         editTextDescription = view.findViewById(R.id.editTextDescription)
         editTextPictureUrl = view.findViewById(R.id.editTextPictureUrl)
-        //editTextVideoUrl = view.findViewById(R.id.editTextVideoUrl)
+        editTextVideoUrl = view.findViewById(R.id.editTextVideoUrl)
 
         ingredientsContainer = view.findViewById(R.id.ingredientsContainer)
         instructionsContainer = view.findViewById(R.id.instructionsContainer)
@@ -108,7 +108,7 @@ class NewRecipeFragment : Fragment() {
         val title = editTextTitle.text.toString()
         val description = editTextDescription.text.toString()
         val pictureURL = editTextPictureUrl.text.toString()
-        //val videoURL = editTextVideoUrl.text.toString()
+        val videoURL = editTextVideoUrl.text.toString()
 
 
         //Validation
@@ -137,7 +137,7 @@ class NewRecipeFragment : Fragment() {
             }
         }
 
-        val recipe = createJsonFromInputs(title, description, pictureURL, ingredients, instructions) //, videoURL
+        val recipe = createJsonFromInputs(title, description, pictureURL, videoURL, ingredients, instructions)
         val recipeEntity = RecipeEntity(
             json = recipe
         )
@@ -150,13 +150,13 @@ class NewRecipeFragment : Fragment() {
         findNavController().navigateUp()
         return true
     }
-    private fun createJsonFromInputs(title: String, description: String, pictureUrl: String,  ingredients: List<String>, instructions: List<String>): String {
-        //videoUrl: String,
+    private fun createJsonFromInputs(title: String, description: String, pictureUrl: String, videoUrl: String,ingredients: List<String>, instructions: List<String>): String {
+
         val jsonObject = JSONObject()
         jsonObject.put("title", title)
         jsonObject.put("description", description)
         jsonObject.put("thumbnailUrl", pictureUrl)
-        //jsonObject.put("videoUrl", videoUrl)
+        jsonObject.put("videoUrl", videoUrl)
         jsonObject.put("ingredients", JSONArray(ingredients))
         jsonObject.put("instructions", JSONArray(instructions))
 
