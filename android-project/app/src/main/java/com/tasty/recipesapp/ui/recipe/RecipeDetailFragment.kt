@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.tasty.recipesapp.R
 import com.tasty.recipesapp.databinding.FragmentRecipeDetailBinding
 import kotlin.math.log
@@ -21,6 +22,7 @@ class RecipeDetailFragment : Fragment() {
         private const val SWIPE_THRESHOLD = 500
         const val ARG_RECIPE_IMAGE = "arg_recipe_image"
         const val ARG_RECIPE_INSTRUCTIONS = "arg_recipe_instructions"
+        const val ARG_RECIPE_INGREDIENTS = "arg_recipe_ingredients"
         // Add other necessary arguments
     }
 
@@ -48,18 +50,21 @@ class RecipeDetailFragment : Fragment() {
         val description = arguments?.getString(recipeDescription    ) ?: ""
         val imageResId = arguments?.getString(ARG_RECIPE_IMAGE) ?: ""
         val instructions = arguments?.getString(ARG_RECIPE_INSTRUCTIONS) ?: ""
-        Log.d("alma", "onViewCreated: " + instructions)
+        val ingredients = arguments?.getString(ARG_RECIPE_INGREDIENTS) ?: ""
+        Log.d("RECIPE_DETAIL", "onViewCreated: " + instructions)
+        Log.d("RECIPE_DETAIL", "onViewCreated: " + ingredients)
 
         // Update UI with recipe details
         Glide.with(requireContext())
             .load(imageResId)
-            .placeholder(R.drawable.cheesecake_logo)
+            .placeholder(R.drawable.recipe_icon)
 
-            .into(binding.recipeDetailImage)
+            .into(binding.imageViewRecipe)
 
-        binding.recipeInstructionsText.text = instructions
-        binding.recipeTitle.text = title
-        binding.recipeDescription.text = description
+        binding.textViewInstructions.text = instructions
+        binding.textViewIngredients.text = ingredients
+        binding.textViewTitle.text = title
+        binding.textViewDescription.text = description
 
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()

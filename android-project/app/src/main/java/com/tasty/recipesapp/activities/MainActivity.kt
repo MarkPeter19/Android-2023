@@ -8,7 +8,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tasty.recipesapp.R
-
+import com.tasty.recipesapp.providers.RepositoryProvider
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
+        RepositoryProvider.initialize(applicationContext)
         setContentView(R.layout.activity_home)
         initBottomNavigation()
 

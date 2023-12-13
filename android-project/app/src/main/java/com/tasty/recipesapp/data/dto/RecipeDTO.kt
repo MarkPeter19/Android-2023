@@ -14,8 +14,8 @@ data class RecipeDTO(
     val id: Int,
     val sections: List<SectionDTO>,
     val name: String?,
-    @SerializedName("video_url")
-    val videoUrl: String?,
+    //@SerializedName("video_url")
+    //val videoUrl: String?,
     val nutrition: NutritionDTO,
     val topics: List<TopicDTO>,
     val instructions: List<InstructionDTO>,

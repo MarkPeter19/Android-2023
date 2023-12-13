@@ -1,11 +1,13 @@
 package com.tasty.recipesapp.ui.recipe
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -21,116 +23,144 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 
-class NewRecipeFragment : Fragment(){
+class NewRecipeFragment : Fragment() {
 
-    private lateinit var binding : FragmentNewRecipeBinding
-    private lateinit var recipeDao: RecipeDao
+    private lateinit var editTextTitle: EditText
+    private lateinit var editTextDescription: EditText
+    private lateinit var editTextPictureUrl: EditText
+    //private lateinit var editTextVideoUrl: EditText
+    private lateinit var ingredientsContainer: LinearLayout
+    private lateinit var instructionsContainer: LinearLayout
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private var numberOfInstructions = 0;
+    private var numberOfIngredients = 0;
 
-    }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        RepositoryProvider.initialize(context)
-        recipeDao = RecipeDatabase.getDatabase(requireContext()).recipeDao()
-    }
-
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // inflate the layout for this fragment
-        val binding = FragmentNewRecipeBinding.inflate(inflater, container, false)
+        val view = inflater.inflate(R.layout.fragment_new_recipe, container, false)
+        editTextTitle = view.findViewById(R.id.editTextTitle)
+        editTextDescription = view.findViewById(R.id.editTextDescription)
+        editTextPictureUrl = view.findViewById(R.id.editTextPictureUrl)
+        //editTextVideoUrl = view.findViewById(R.id.editTextVideoUrl)
+        ingredientsContainer = view.findViewById(R.id.ingredientsContainer)
+        instructionsContainer = view.findViewById(R.id.instructionsContainer)
 
-        val linearLayoutIngredient = binding.layoutIngredients
-        val linearLayoutInstruction = binding.layoutInstructions
+        val btnAddIngredient: Button = view.findViewById(R.id.addIngredientButton)
 
-        //add buttons
-        val addIngredientButton = binding.addIngredientButton
-        val addInstructionButton = binding.addInstructionButton
-
-        addIngredientButton.setOnClickListener {
-            addNewEditText(linearLayoutIngredient, "Enter ingredient")
+        btnAddIngredient.setOnClickListener {
+            addNewField(ingredientsContainer, "Ingredient")
         }
 
-        addInstructionButton.setOnClickListener {
-            addNewEditText(linearLayoutInstruction, "Enter instruction")
+        val btnAddInstruction: Button = view.findViewById(R.id.addInstructionButton)
+        btnAddInstruction.setOnClickListener {
+            addNewField(instructionsContainer, "Instruction")
         }
 
-        //save button
-        val saveRecipeButton = binding.saveRecipeButton
-        saveRecipeButton.setOnClickListener {
+        val btnSave: Button = view.findViewById(R.id.saveNewRecipeButton)
+        btnSave.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                saveRecipeToDatabase(binding) //save to db
-                Toast.makeText(requireContext(), "Recipe saved", Toast.LENGTH_SHORT).show() //message
-                findNavController().navigate(R.id.action_newRecipeFragment_to_profileFragment)  //navigation
+                if(saveRecipe(view)) {
+                    findNavController().navigateUp()
+                    Toast.makeText(requireContext(), "Your Recipe Was Saved!", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
 
+        val exitButton: Button = view.findViewById(R.id.exitButton)
+        exitButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
-        return binding.root
+        return view
     }
 
-    private suspend fun saveRecipeToDatabase(binding: FragmentNewRecipeBinding) {
+    private fun addNewField(container: LinearLayout, hint: String) {
+        val editText = EditText(requireContext())
+        editText.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        if(container == ingredientsContainer){
+            editText.hint =  "#" +(numberOfIngredients + 1).toString() + "."+ hint;
+            numberOfIngredients++
+        } else {
+            editText.hint =  "#" +(numberOfInstructions + 1).toString() + "."+  hint
+            numberOfInstructions++
+        }
 
-        //get inputs from edit text
-        val title = binding.recipeTitle.text.toString()
-        val description = binding.recipeDescription.text.toString()
-        val pictureURL = binding.recipePictureURL.text.toString()
-        val videoURL = binding.recipeVideoURL.text.toString()
+        container.addView(editText)
+    }
+
+    private fun saveRecipe(view: View) : Boolean {
+
+        editTextTitle = view.findViewById(R.id.editTextTitle)
+        editTextDescription = view.findViewById(R.id.editTextDescription)
+        editTextPictureUrl = view.findViewById(R.id.editTextPictureUrl)
+        //editTextVideoUrl = view.findViewById(R.id.editTextVideoUrl)
+
+        ingredientsContainer = view.findViewById(R.id.ingredientsContainer)
+        instructionsContainer = view.findViewById(R.id.instructionsContainer)
+
+        val title = editTextTitle.text.toString()
+        val description = editTextDescription.text.toString()
+        val pictureURL = editTextPictureUrl.text.toString()
+        //val videoURL = editTextVideoUrl.text.toString()
+
+
+        //Validation
+        if(title.isEmpty() || description.isEmpty() ) {
+            Toast.makeText(requireContext(), "Please fill in at least Title and Description!", Toast.LENGTH_SHORT).show()
+            return false
+        }
 
         val ingredients = mutableListOf<String>()
-        for (i in 0 until binding.layoutIngredients.childCount) {
-            val editText = binding.layoutIngredients.getChildAt(i) as? EditText
+        for (i in 0 until ingredientsContainer.childCount) {
+            val editText = ingredientsContainer.getChildAt(i) as? EditText
             editText?.let {
-                ingredients.add(it.text.toString())
+                if(it.text.toString().isNotEmpty()) {
+                    ingredients.add(it.text.toString())
+                }
             }
         }
 
         val instructions = mutableListOf<String>()
-        for (i in 0 until binding.layoutInstructions.childCount) {
-            val editText = binding.layoutInstructions.getChildAt(i) as? EditText
+        for (i in 0 until instructionsContainer.childCount) {
+            val editText = instructionsContainer.getChildAt(i) as? EditText
             editText?.let {
-                instructions.add(it.text.toString())
+                if(it.text.toString().isNotEmpty()) {
+                    instructions.add(it.text.toString())
+                }
             }
         }
 
-        //format to json
-        val recipe = createJsonFromInputs(title, description, pictureURL, videoURL, ingredients, instructions)
+        val recipe = createJsonFromInputs(title, description, pictureURL, ingredients, instructions) //, videoURL
         val recipeEntity = RecipeEntity(
             json = recipe
         )
 
-        //save new recipe to db using repository provider
         viewLifecycleOwner.lifecycleScope.launch {
+
             RepositoryProvider.recipeRepository.insertRecipe(recipeEntity)
         }
-    }
 
-    private fun createJsonFromInputs(title: String, description: String, pictureUrl: String, videoUrl: String, ingredients: List<String>, instructions: List<String>): String {
+        findNavController().navigateUp()
+        return true
+    }
+    private fun createJsonFromInputs(title: String, description: String, pictureUrl: String,  ingredients: List<String>, instructions: List<String>): String {
+        //videoUrl: String,
         val jsonObject = JSONObject()
         jsonObject.put("title", title)
         jsonObject.put("description", description)
-        jsonObject.put("pictureUrl", pictureUrl)
-        jsonObject.put("videoUrl", videoUrl)
+        jsonObject.put("thumbnailUrl", pictureUrl)
+        //jsonObject.put("videoUrl", videoUrl)
         jsonObject.put("ingredients", JSONArray(ingredients))
         jsonObject.put("instructions", JSONArray(instructions))
 
         return jsonObject.toString()
-    }
-
-    //add new editText function dynamically
-    private fun addNewEditText(linearLayout: LinearLayout, hint: String) {
-        val editText = EditText(context)
-        editText.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        editText.hint = hint
-        editText.textSize = 16f
-
-        linearLayout.addView(editText)
     }
 
 }

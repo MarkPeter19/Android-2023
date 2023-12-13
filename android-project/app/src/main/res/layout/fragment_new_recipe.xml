@@ -1,229 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.recipe.NewRecipeFragment">
+
+
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
-
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add New Recipe"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"/>
+            android:layout_above="@+id/saveNewRecipeButton"
+            android:layout_alignParentTop="true">
 
-        <LinearLayout
-                android:id="@+id/linearLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintVertical_bias="0.0">
+                android:padding="16dp">
 
-            <EditText
-                    android:id="@+id/recipeTitle"
+                <TextView
+                    android:id="@+id/textViewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:text="Create A New Recipe"
+                    android:textSize="24sp"
+                    android:textStyle="italic"/>
+
+<!--                <View-->
+<!--                    android:id="@+id/titleSeparator"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:layout_below="@+id/textViewTitle"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:background="@android:color/darker_gray"/>-->
+
+                <EditText
+                    android:id="@+id/editTextTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:ems="10"
-                    android:hint="Recipe Title"
-                    android:textSize="20sp"
-                    style="@style/RoundedEditText"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/recipeDescription"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintHorizontal_bias="0.080"
-                    app:layout_constraintVertical_bias="0.090" />
+                    android:layout_marginTop="5dp"
+                    android:hint="Title"
+                    android:minHeight="48dp"/>
 
-            <EditText
-                    android:id="@+id/recipeDescription"
+                <EditText
+                    android:id="@+id/editTextDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textSize="20sp"
+                    android:layout_marginTop="5dp"
                     android:hint="Description"
-                    android:ems="10"
-                    style="@style/RoundedEditText"
-                    app:layout_constraintTop_toBottomOf="@+id/recipeTitle"
-                    app:layout_constraintBottom_toTopOf="@+id/recipePictureURL"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintHorizontal_bias="0.079"
-                    app:layout_constraintVertical_bias="0.024"
-                    android:layout_marginTop="8dp" />
+                    android:minHeight="48dp"/>
 
-            <EditText
-                    android:id="@+id/recipePictureURL"
+                <EditText
+                    android:id="@+id/editTextPictureUrl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textSize="20sp"
+                    android:layout_marginTop="5dp"
                     android:hint="Picture URL"
-                    android:ems="10"
-                    style="@style/RoundedEditText"
-                    app:layout_constraintTop_toBottomOf="@+id/recipeDescription"
-                    app:layout_constraintBottom_toTopOf="@+id/recipeVideoURL"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintHorizontal_bias="0.079"
-                    app:layout_constraintVertical_bias="0.036"
-                    android:layout_marginTop="8dp" />
+                    android:minHeight="48dp"/>
 
-            <EditText
-                    android:id="@+id/recipeVideoURL"
+<!--                <EditText-->
+<!--                    android:id="@+id/editTextVideoUrl"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:hint="Video URL"-->
+<!--                    android:minHeight="48dp"/>-->
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textSize="20sp"
-                    android:hint="Video URL"
-                    android:ems="10"
-                    style="@style/RoundedEditText"
-                    app:layout_constraintTop_toBottomOf="@+id/recipePictureURL"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintHorizontal_bias="0.079"
-                    app:layout_constraintVertical_bias="0.038"
-                    android:layout_marginTop="8dp" />
-        </LinearLayout>
+                    android:layout_marginTop="16dp"
+                    android:text="Ingredients"
+                    android:textSize="18sp"
+                    android:textStyle="italic"/>
 
-
-        <TextView
-                android:text="Ingredients"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textIngredients"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintVertical_bias="0.0"/>
-
-        <!-- Add dynamic views for ingredients -->
-        <LinearLayout
-                android:id="@+id/layoutIngredients"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/textIngredients"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintVertical_bias="0.0">
-
-            <EditText
+                <LinearLayout
+                    android:id="@+id/ingredientsContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textSize="20sp"
-                    android:hint="#1 Enter ingredient"
-                    android:id="@+id/firstIngredient"
-                    style="@style/RoundedEditText"
-                    android:layout_marginTop="8dp" />
+                    android:orientation="vertical"/>
 
-            <Button
-                android:id="@+id/addIngredientButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add"
-                android:backgroundTint="@color/orange"
-                app:layout_constraintTop_toBottomOf="@+id/firstIngredient"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintVertical_bias="0.0"/>
+                <Button
+                    android:id="@+id/addIngredientButton"
+                    android:backgroundTint="@color/orange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Ingredient"
+                    android:layout_marginTop="8dp"/>
 
-        </LinearLayout>
-
-
-
-        <TextView
-                android:text="Instructions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:id="@+id/textInstructions"
-                app:layout_constraintTop_toBottomOf="@+id/layoutIngredients"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintVertical_bias="0.099"/>
-
-        <!-- Add dynamic views for instructions -->
-        <LinearLayout
-                android:id="@+id/layoutInstructions"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/textInstructions"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.157"
-                app:layout_constraintVertical_bias="0.0">
-
-
-            <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textSize="20sp"
-                    android:hint="#1 Enter instruction"
-                    android:id="@+id/firstInstruction"
-                    style="@style/RoundedEditText"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginTop="16dp"
+                    android:text="Instructions"
+                    android:textSize="18sp"
+                    android:textStyle="italic"/>
 
-            <Button
-                android:id="@+id/addInstructionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add"
-                android:backgroundTint="@color/orange"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutInstructions"
-                app:layout_constraintVertical_bias="0.0"/>
+                <LinearLayout
+                    android:id="@+id/instructionsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
 
-
-        </LinearLayout>
-
-
+                <Button
+                    android:id="@+id/addInstructionButton"
+                    android:layout_width="wrap_content"
+                    android:backgroundTint="@color/orange"
+                    android:layout_height="wrap_content"
+                    android:text="Add Instruction"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+        </ScrollView>
 
         <Button
-                android:text="Save Recipe"
-                android:id="@+id/saveRecipeButton"
-                android:backgroundTint="@color/orange"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="100dp"
-                app:layout_constraintTop_toBottomOf="@+id/layoutInstructions"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintVertical_bias="1.0" />
+            android:id="@+id/saveNewRecipeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/orange"
+            android:layout_above="@+id/exitButton"
+            android:text="Save" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/orange"
+            android:layout_height="wrap_content"
+            android:text="Exit"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+</FrameLayout>

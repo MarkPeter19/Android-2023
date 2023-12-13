@@ -39,14 +39,15 @@ class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<R
         }
     }
 
-//    suspend fun getAllOwnRecipes(): List<NewRecipeModel> {
-//        return recipeDao.getAllRecipes().map {
-//            val jsonObject = JSONObject(it.json)
-//            jsonObject.apply { put("id", it.internalId) }
-//            val gson = Gson()
-//            gson.fromJson(jsonObject.toString(), NewRecipeDTO::class.java).toModel()
-//        }
-//    }
+    //get all created recipes (profileViewModel)
+    suspend fun getAllOwnRecipes(): List<NewRecipeModel> {
+        return recipeDao.getAllRecipes().map {
+            val jsonObject = JSONObject(it.json)
+            jsonObject.apply { put("id", it.internalId) }
+            val gson = Gson()
+            gson.fromJson(jsonObject.toString(), NewRecipeDTO::class.java).toModel()
+        }
+    }
 
     suspend fun getRecipeById(recipeId: Long): NewRecipeModel? {
         val recipeEntity = recipeDao.getRecipeById(recipeId)
@@ -57,24 +58,6 @@ class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<R
             gson.fromJson(jsonObject.toString(), NewRecipeDTO::class.java).toModel()
         }
     }
-
-
-
-//    override fun NewRecipeDTO.toModel(): NewRecipeModel {
-//        return NewRecipeModel(
-//            id = this.id,
-//            description = this.description,
-//            title = this.title,
-//            pictureUrl = this.pictureUrl,
-//            videoUrl = this.videoUrl,
-//            ingredients = this.ingredients,
-//            instructions = this.instructions
-//        )
-//    }
-//
-//    override fun List<NewRecipeDTO>.toModelList(): List<NewRecipeModel> {
-//        return this.map { it.toModel() }
-//    }
 
 
 

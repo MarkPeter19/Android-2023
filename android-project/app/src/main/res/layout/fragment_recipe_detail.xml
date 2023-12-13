@@ -20,6 +20,15 @@
                       android:orientation="vertical"
                       android:padding="16dp">
 
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:backgroundTint="@color/orange"
+                android:layout_below="@id/textViewInstructions"
+                android:layout_marginTop="16dp"/>
+
 
             <ImageView
                 android:id="@+id/imageViewRecipe"
@@ -32,7 +41,7 @@
                 android:id="@+id/textViewTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="50sp"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
                 android:text="Title"/>

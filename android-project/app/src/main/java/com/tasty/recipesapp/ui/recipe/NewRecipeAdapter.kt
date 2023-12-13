@@ -1,4 +1,4 @@
-package com.tasty.recipesapp.adapters
+package com.tasty.recipesapp.ui.recipe
 
 import android.graphics.BitmapFactory
 import android.os.Handler
@@ -23,7 +23,7 @@ class NewRecipeAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewRecipeViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_recipe, parent, false)
+            .inflate(R.layout.item_own_recipe, parent, false)
         return NewRecipeViewHolder(view)
     }
 
@@ -37,7 +37,7 @@ class NewRecipeAdapter(
 
         executor.execute {
 
-            val imageURL = recipe.pictureUrl
+            val imageURL = recipe.thumbnailUrl
 
             try {
                 val url = URL(imageURL)
@@ -75,8 +75,8 @@ class NewRecipeAdapter(
     }
 
     class NewRecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView : TextView = itemView.findViewById(R.id.recipeImage)
-        val imageView : ImageView = itemView.findViewById(R.id.recipeImage)
+        val textView : TextView = itemView.findViewById(R.id.textView)
+        val imageView : ImageView = itemView.findViewById(R.id.imageView)
     }
 
 }
