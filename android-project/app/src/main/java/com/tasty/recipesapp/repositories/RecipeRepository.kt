@@ -14,10 +14,28 @@ import com.tasty.recipesapp.utils.Mapping.toRecipeModelList
 import com.tasty.recipesapp.database.entities.RecipeEntity
 import com.tasty.recipesapp.database.daos.RecipeDao
 import com.tasty.recipesapp.database.dataBases.RecipeDatabase
+import com.tasty.recipesapp.services.RecipeApiClient
 import org.json.JSONObject
 import java.io.IOException
 
 class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<RecipeModel> {
+
+    //initalize RecipeApiClient
+    private val recipeApiClient = RecipeApiClient()
+
+    suspend fun getRecipesFromApi(
+        from: String,
+        size: String,
+        tags: String? = null
+    ): List<RecipeModel> {
+        // You can call the suitable method from the API client here
+        // For example, if your RecipeApiClient has a method named getRecipes,
+        // you can use it like this:
+        return recipeApiClient.getRecipes(from, size, tags)?.recipes ?: emptyList()
+    }
+
+
+
 
     //insert
     suspend fun insertRecipe(recipe: RecipeEntity) {
