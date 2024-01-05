@@ -40,22 +40,42 @@ class RecipesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        //val recipes = viewModel.loadRecipesData(requireContext()) //load from file
-        viewModel.getAllRecipesFromApi() //load from API
+        val recipes = viewModel.loadRecipesData(requireContext()) //load from file
 
-//        val recyclerView: RecyclerView = binding.recyclerView;
-//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//
-//        val adapter = recipes?.let { RecipeAdapter(it) }
-//        recyclerView.adapter = adapter
 
-        // Use observe to update UI when data changes
-        viewModel._recipesFromApi.observe(viewLifecycleOwner, Observer { recipes ->
-            adapter = RecipeAdapter(recipes)
-            binding.recyclerView.adapter = adapter
-        })
+        val recyclerView: RecyclerView = binding.recyclerView;
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val adapter = recipes?.let { RecipeAdapter(it) }
+        recyclerView.adapter = adapter
+
+//        viewModel.getAllRecipesFromApi() //load from API
+
+//         Use observe to update UI when data changes
+//        viewModel._recipesFromApi.observe(viewLifecycleOwner, Observer { recipes ->
+//            adapter = RecipeAdapter(recipes)
+//            binding.recyclerView.adapter = adapter
+//        })
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        // Set up search button click listener
+//        binding.searchButton.setOnClickListener {
+//            val query = binding.searchView.query.toString()
+//            // Perform search using the query (you need to implement this method)
+//            performSearch(query)
+//        }
+
+
     }
+
+//    private fun performSearch(query: String) {
+//        // Implement the search logic here
+//        // Update the RecyclerView adapter with the search results
+//        // For example, you might call a function in your ViewModel to get filtered recipes
+//        viewModel.getFilteredRecipesFromApi(query).observe(viewLifecycleOwner, Observer { recipes ->
+//            adapter.updateData(recipes)
+//        })
+//    }
+
 }

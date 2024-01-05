@@ -1,10 +1,13 @@
 package com.tasty.recipesapp.services
 
-import com.google.gson.annotations.SerializedName
-import com.tasty.recipesapp.data.models.RecipeModel
 
-data class RecipeResponse(
-    @SerializedName("recipes")
-    val recipes: List<RecipeModel>?,
-    // Add other fields if needed
+import com.tasty.recipesapp.data.dto.RecipeDTO
+
+
+data class RecipeResponseDTO(
+    val count : Int,
+    val results: List<RecipeDTO>
 )
+
+
+

@@ -23,8 +23,8 @@ class RecipeViewModel : ViewModel() {
     //load data from API
     private val recipeApiClient = RecipeApiClient()
 
-    val _recipesFromApi = MutableLiveData<List<RecipeModel>>()
-    val recipesFromApi: LiveData<List<RecipeModel>> get() = _recipesFromApi
+    val _recipesFromApi = MutableLiveData<List<RecipeApiModel>>()
+    val recipesFromApi: LiveData<List<RecipeApiModel>> get() = _recipesFromApi
 
     fun getAllRecipesFromApi() {
         viewModelScope.launch {
@@ -33,6 +33,21 @@ class RecipeViewModel : ViewModel() {
             _recipesFromApi.value = recipes
             Log.d("RECIPE_API", recipes.toString())
             recipes.forEach {
+                Log.d("RECIPE_API", it.toString())
+            }
+        }
+    }
+
+    // Function to get filtered recipes
+    fun getFilteredRecipesFromApi(query: String) {
+        viewModelScope.launch {
+            // Assuming you have a function in your repository to get filtered recipes
+            // Adjust the function accordingly based on your repository implementation
+            val filteredRecipes = RepositoryProvider.recipeRepository.getFilteredRecipesFromApi(query)
+
+            _recipesFromApi.value = filteredRecipes
+            Log.d("RECIPE_API", filteredRecipes.toString())
+            filteredRecipes.forEach {
                 Log.d("RECIPE_API", it.toString())
             }
         }

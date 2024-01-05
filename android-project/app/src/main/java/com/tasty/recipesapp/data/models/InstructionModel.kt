@@ -5,7 +5,6 @@ data class InstructionModel(
     val displayText: String,
     val time: InstructionTime
 )
-
 data class InstructionTime(
     val startTime: Int,
     val endTime: Int

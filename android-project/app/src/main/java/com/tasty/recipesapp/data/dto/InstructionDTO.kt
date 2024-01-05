@@ -10,7 +10,7 @@ data class InstructionDTO(
     @SerializedName("temperature")
     val temperature: String?,
     @SerializedName("id")
-    val id: Int,
+    val id : Int,
     @SerializedName("position")
     val position: Int,
     @SerializedName("display_text")
