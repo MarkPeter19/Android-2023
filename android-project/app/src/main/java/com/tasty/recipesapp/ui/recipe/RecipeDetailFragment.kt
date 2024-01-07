@@ -1,5 +1,6 @@
 package com.tasty.recipesapp.ui.recipe
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.tasty.recipesapp.R
 import com.tasty.recipesapp.data.models.InstructionModel
@@ -36,40 +39,48 @@ class RecipeDetailFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
-            val args = this@RecipeDetailFragment.arguments
-            val title = args?.getString(recipeTitle) ?: ""
-            val description = args?.getString(recipeDescription) ?: ""
-            val imageResId = args?.getString(ARG_RECIPE_IMAGE) ?: ""
-           // val instructionsList = args?.getStringArrayList(ARG_RECIPE_INSTRUCTIONS)
-            val ingredientsList = args?.getStringArrayList(ARG_RECIPE_INGREDIENTS)
+        val viewModel = ViewModelProvider(this)[RecipeDetailViewModel::class.java]
 
-            //Log.d("RECIPE_DETAIL", "onViewCreated: $instructionsList")
-            Log.d("RECIPE_DETAIL", "onViewCreated: $ingredientsList")
+        val id = arguments?.getInt("arg_recipe_id") ?: 0
 
+        val loadingAnimationResourceId = R.drawable.loading_animation
+
+        viewModel.loadRecipeFromApi(id.toString())
+        viewModel.recipeData.observe(viewLifecycleOwner){recipe->
+            // Update UI with recipe details
             Glide.with(requireContext())
-                .load(imageResId)
-                .placeholder(R.drawable.recipe_icon)
+                .load(recipe?.thumbnailUrl)
+                .placeholder(loadingAnimationResourceId)
                 .into(binding.imageViewRecipe)
 
-            binding.textViewTitle.text = title
-            binding.textViewDescription.text = description
 
-            // Convert the lists to string representation
-            val ingredientsText = ingredientsList?.joinToString(separator = "\n") { "- $it" } ?: ""
-//            val instructionsText = instructionsList?.joinToString(separator = "\n") {
-//                "- ${it.displayText} (${it.time.startTime}-${it.time.endTime})"
-//            } ?: ""
+            var instructions: MutableList<String> = mutableListOf()
+            var result: String = ""
+            recipe?.instructions?.forEach() { ins ->
+                instructions.add("- " + ins.displayText)
+            }
 
-            binding.textViewIngredients.text = ingredientsText
-            //binding.textViewInstructions.text = instructionsText
+            var ingredients: MutableList<String> = mutableListOf()
+            recipe?.sections?.forEach() { sec ->
+                sec.components.forEach() { comp ->
+                    ingredients.add("- " + comp.ingredient.name)
+                }
+            }
+            val ingredientResult = ingredients.joinToString(separator = "\n")
+            result = instructions.joinToString(separator = "\n")
+            binding.textViewIngredients.text = ingredientResult
+            binding.textViewInstructions.text = result
+            binding.textViewTitle.text = recipe?.name
+            binding.textViewDescription.text = recipe?.description
+
         }
 
         binding.backButton.setOnClickListener {
-            activity?.onBackPressed()
+            findNavController().navigateUp()
         }
 
         view.setOnTouchListener { _, event ->

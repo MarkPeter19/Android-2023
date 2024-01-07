@@ -22,11 +22,12 @@ import java.io.IOException
 
 
 
-class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<RecipeModel> {
-
+class RecipesRepository(private val recipeDao: RecipeDao): IGenericRepository<NewRecipeDTO, NewRecipeModel> {
     //initalize RecipeApiClient
-    private var recipeApiClient: RecipeApiClient = RecipeApiClient()
-
+    private var recipeApiClient: RecipeApiClient
+    init {
+        recipeApiClient = RecipeApiClient()
+    }
 
 
 
@@ -93,11 +94,11 @@ class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<R
 
 
     //read data form json file
-    override fun getAll(context: Context): List<RecipeModel> {
+    fun getAllFromFile(context: Context): List<RecipeModel> {
         return readFromAssets(context).toModelList()
     }
 
-    fun readFromAssets(context: Context): List<RecipeDTO> {
+    private fun readFromAssets(context: Context): List<RecipeDTO> {
         val gson = Gson()
         var recipeList = listOf<RecipeDTO>()
         val assetManager = context.assets
@@ -120,5 +121,22 @@ class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<R
             e.printStackTrace()
         }
         return recipeList
+    }
+
+    override fun NewRecipeDTO.toModel(): NewRecipeModel {
+        return NewRecipeModel(
+            id = this.id,
+            description = this.description,
+            title = this.title,
+            thumbnailUrl = this.thumbnailUrl,
+            videoUrl = this.videoUrl,
+            ingredients = this.ingredients,
+            instructions = this.instructions
+
+        )
+    }
+
+    override fun List<NewRecipeDTO>.toModelList(): List<NewRecipeModel> {
+        return this.map { it.toModel() }
     }
 }

@@ -13,45 +13,22 @@ import kotlinx.coroutines.launch
 
 class RecipeViewModel : ViewModel() {
 
-    //Function to load data from the repository
+    var recipeData = MutableLiveData<List<RecipeModel>>()
+
     //load data from file
-    fun loadRecipesData(context: Context): List<RecipeModel>? {
-        return RepositoryProvider.recipeRepository.getAll(context)
-    }
+//    fun loadRecipesFromAssets(context: Context): List<RecipeModel>? {
+//        return RepositoryProvider.recipeRepository.getAllFromFile(context)
+//    }
 
 
     //load data from API
-    private val recipeApiClient = RecipeApiClient()
-
-    val _recipesFromApi = MutableLiveData<List<RecipeApiModel>>()
-    val recipesFromApi: LiveData<List<RecipeApiModel>> get() = _recipesFromApi
-
     fun getAllRecipesFromApi() {
         viewModelScope.launch {
-            val recipes = RepositoryProvider.recipeRepository.getRecipesFromApi("0", "15")
-
-            _recipesFromApi.value = recipes
-            Log.d("RECIPE_API", recipes.toString())
-            recipes.forEach {
-                Log.d("RECIPE_API", it.toString())
-            }
+            recipeData.value = RepositoryProvider.recipeRepository.getRecipesFromApi("0", "15","")
         }
     }
 
-    // Function to get filtered recipes
-    fun getFilteredRecipesFromApi(query: String) {
-        viewModelScope.launch {
-            // Assuming you have a function in your repository to get filtered recipes
-            // Adjust the function accordingly based on your repository implementation
-            val filteredRecipes = RepositoryProvider.recipeRepository.getFilteredRecipesFromApi(query)
 
-            _recipesFromApi.value = filteredRecipes
-            Log.d("RECIPE_API", filteredRecipes.toString())
-            filteredRecipes.forEach {
-                Log.d("RECIPE_API", it.toString())
-            }
-        }
-    }
 
 
 }
