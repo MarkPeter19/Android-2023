@@ -1,38 +1,29 @@
 package com.tasty.recipesapp.ui.profile
 
-
-import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
-import com.tasty.recipesapp.R
-import com.tasty.recipesapp.data.models.NewRecipeModel
-import com.tasty.recipesapp.database.entities.RecipeEntity
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.tasty.recipesapp.databinding.FragmentProfileBinding
-import com.tasty.recipesapp.ui.recipe.NewRecipeAdapter
-import com.tasty.recipesapp.ui.recipe.NewRecipeDetailFragment
-import kotlinx.coroutines.launch
+import com.tasty.recipesapp.ui.profile.ProfilePagerAdapter
+
 
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    private val profileViewModel: ProfileViewModel by viewModels()
-    private lateinit var recipeAdapter: NewRecipeAdapter
+    private lateinit var profileViewModel: ProfileViewModel
+    //private lateinit var recipeAdapter: NewRecipeAdapter
+
+    private lateinit var viewPager: ViewPager2
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,80 +41,31 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val fabAddRecipe: FloatingActionButton = binding.floatingButtonAddRecipe
+
         fabAddRecipe.setOnClickListener {
-            navigateToNewRecipeFragment(binding.root)
+            profileViewModel.navigateToNewRecipeFragment(binding.root)
         }
 
-        val recyclerView: RecyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.setHasFixedSize(true)
+        viewPager = binding.viewPager
+        tabLayout = binding.tabLayout
 
-        recipeAdapter = NewRecipeAdapter(emptyList(),
-            { recipe -> confirmDeleteRecipe(recipe,requireContext(),this) },
-            { recipe -> onRecipeClicked(recipe, this) }
-        )
+        profileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
 
-        recyclerView.adapter = recipeAdapter
+        // Create and set up the adapter
+        val profilePagerAdapter = ProfilePagerAdapter(this)
+        viewPager.adapter = profilePagerAdapter
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            profileViewModel.getAllRecipes()
-        }
-
-        profileViewModel.allRecipes.observe(viewLifecycleOwner) { recipes ->
-            recipeAdapter.updateData(recipes)
-        }
-    }
-
-    private fun confirmDeleteRecipe(recipe: NewRecipeModel, context: Context, profileFragment: ProfileFragment) {
-        val alertDialogBuilder = AlertDialog.Builder(context)
-        alertDialogBuilder.apply {
-            setTitle("Delete Recipe")
-            setMessage("Are you sure you want to delete this recipe?")
-            setPositiveButton("Yes") { _, _ ->
-                deleteRecipe(recipe)
+        // Set up tabs
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "My Recipes"
+                1 -> "Profile"
+                else -> ""
             }
-            setNegativeButton("No") { dialog, _ ->
-                dialog.dismiss()
-            }
-        }
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
-    private fun deleteRecipe(recipe: NewRecipeModel) {
-        val recipeEntity = convertToRecipeEntity(recipe)
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            profileViewModel.removeRecipe(recipeEntity)
-            profileViewModel.getAllRecipes()
-        }
-    }
-    private fun convertToRecipeEntity(recipe: NewRecipeModel): RecipeEntity {
-        val gson = Gson()
-        return RecipeEntity(
-            internalId = recipe.id,
-            json = gson.toJson(recipe)
-        )
+        }.attach()
     }
 
-    private fun onRecipeClicked(recipe: NewRecipeModel, fragment: ProfileFragment) {
-        val bundle = Bundle()
-        bundle.putLong("recipe", recipe.id)
-        val detailFragment = NewRecipeDetailFragment()
-        detailFragment.arguments = bundle
-        NavHostFragment.findNavController(fragment).navigate(R.id.action_profileFragment_to_newRecipeDetailFragment, bundle)
-    }
-
-    private fun navigateToNewRecipeFragment(view: View) {
-        val action: NavDirections = object : NavDirections {
-
-            override val actionId: Int
-                get() = R.id.action_profileFragment_to_newRecipeFragment
-            override val arguments: Bundle
-                get() = bundleOf()
-
-        }
-        view?.findNavController()?.navigate(action)
-    }
 
 }

@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         RepositoryProvider.initialize(applicationContext)
+        RepositoryProvider.initaliazePreferencesManager(context = this.applicationContext)
         setContentView(R.layout.activity_home)
         initBottomNavigation()
 

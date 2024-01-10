@@ -24,29 +24,17 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel() : ViewModel(){
 
-    private val _allRecipes = MutableLiveData<List<NewRecipeModel>>()
+    fun navigateToNewRecipeFragment(view: View) {
 
-    val allRecipes: LiveData<List<NewRecipeModel>>
-        get() = _allRecipes
+        val action: NavDirections = object : NavDirections {
 
-    suspend fun getAllRecipes(){
-        viewModelScope.launch {
-            val recipes = RepositoryProvider.recipeRepository.getAllOwnRecipes()
-            _allRecipes.value = recipes
+            override val actionId: Int
+                get() = R.id.action_profileFragment_to_newRecipeFragment
+            override val arguments: Bundle
+                get() = bundleOf()
+
         }
-    }
-
-    fun insertRecipe(recipe: RecipeEntity) {
-        viewModelScope.launch {
-            RepositoryProvider.recipeRepository.insertRecipe(recipe)
-        }
-    }
-
-    fun removeRecipe(recipe: RecipeEntity) {
-        viewModelScope.launch {
-            RepositoryProvider.recipeRepository.deleteRecipe(recipe)
-            _allRecipes.value = RepositoryProvider.recipeRepository.getAllOwnRecipes()
-        }
+        view?.findNavController()?.navigate(action)
     }
 
 }

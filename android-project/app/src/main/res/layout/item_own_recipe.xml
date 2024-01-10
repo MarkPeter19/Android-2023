@@ -27,6 +27,19 @@
             app:layout_constraintVertical_chainStyle="packed"
             android:scaleType="centerCrop"/>
 
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/StarIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#e5eb34"
+            app:tint="@color/white"
+            android:pointerIcon="hand"
+            android:src="@drawable/baseline_star_24"
+            android:layout_margin="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:text="TextView"
             android:textSize="24sp"

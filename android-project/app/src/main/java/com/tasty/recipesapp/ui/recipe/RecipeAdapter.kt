@@ -43,7 +43,7 @@ class RecipeAdapter(private var recipes: List<RecipeModel>, private val onAddToF
 
         val recipeTitle: TextView = itemView.findViewById(R.id.recipeTitle)
         val recipeImage: ImageView = itemView.findViewById(R.id.recipeImage)
-        //val addToFavorites: Button = itemView.findViewById(R.id.addToFavoritesButton)
+        val addToFavorites: Button = itemView.findViewById(R.id.addToFavoritesButton)
 
     }
 
@@ -59,10 +59,10 @@ class RecipeAdapter(private var recipes: List<RecipeModel>, private val onAddToF
         val recipe = filteredRecipes[position]
         holder.recipeTitle.text = recipe.name
 
-//        holder.addToFavorites.setOnClickListener{
-//            onAddToFavoritesClickListener.onAddToFavoritesClick(recipe)
-//            Toast.makeText(context,"Recipe Added to Favorites", Toast.LENGTH_SHORT).show()
-//        }
+        holder.addToFavorites.setOnClickListener{
+            onAddToFavoritesClickListener.onAddToFavoritesClick(recipe)
+            Toast.makeText(context,"Recipe Added to Favorites", Toast.LENGTH_SHORT).show()
+        }
 
         holder.itemView.setOnClickListener { view ->
             val action: NavDirections = object : NavDirections {
