@@ -1,15 +1,20 @@
 package com.tasty.recipesapp.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.tasty.recipesapp.R
+
+
 
 
 class UserProfileFragment : Fragment() {
@@ -35,6 +40,7 @@ class UserProfileFragment : Fragment() {
         userEmailTextView = view.findViewById(R.id.emailEditText)
         saveButton = view.findViewById(R.id.saveButton)
 
+
         // Observe changes in user profile data
         userProfileViewModel.userName.observe(viewLifecycleOwner) { name ->
             // Update UI with the user's name
@@ -50,10 +56,7 @@ class UserProfileFragment : Fragment() {
             saveUserCredentials()
         }
 
-
-        // TODO: Load and display profile picture (you can use an ImageView for this)
     }
-
 
 
     private fun saveUserCredentials() {
@@ -65,10 +68,8 @@ class UserProfileFragment : Fragment() {
             userProfileViewModel.updateUserProfile(newName, newEmail)
 
             Toast.makeText(requireContext(), "Profile saved successfully!", Toast.LENGTH_SHORT).show()
-            // TODO: Perfo  rm any additional actions, such as updating the UI or showing a success message
         } else {
             Toast.makeText(requireContext(), "Please enter your name and email.", Toast.LENGTH_SHORT).show()
-            // TODO: Handle validation errors, e.g., show an error message
         }
 
     }
